@@ -4,7 +4,7 @@
 @author Cobalt74 <cobalt74@gmail.com>
 @link http://www.cobestran.com
 @licence CC by nc sa http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
-@version 1.0.0
+@version 1.1.0
 @description Le plugin search permet d'effectuer une recherche sur les articles de Leed. Ne perdez plus aucune information !
 */
 
@@ -84,7 +84,6 @@ function search_plugin_recherche(){
 }
 
 // Ajout de la fonction au Hook situé avant l'affichage des évenements
-Plugin::addCss("/css/style.css"); 
 Plugin::addHook("setting_post_link", "search_plugin_AddLink_and_Search");
 Plugin::addHook("setting_post_section", "search_plugin_AddForm");
 
