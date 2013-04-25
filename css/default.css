@@ -15,7 +15,16 @@
 }
 
 .search_article{
-	border-top: 1px solid #cecece;
+    border-top: 1px solid #cecece;
+}
+
+.search_article span{
+	color: #ffffff;
+	margin-left:5px;
+}
+
+.search_buttonbBar{
+	float: right;
 }
 
 .search_article_title{

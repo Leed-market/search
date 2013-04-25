@@ -4,7 +4,7 @@
 @author Cobalt74 <cobalt74@gmail.com>
 @link http://www.cobestran.com
 @licence CC by nc sa http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
-@version 1.1.0
+@version 2.0.0
 @description Le plugin search permet d'effectuer une recherche sur les articles de Leed. Ne perdez plus aucune information !
 */
 
@@ -54,7 +54,7 @@ function search_plugin_AddForm(){
 
 // foction de recherche des articles avec affichage du résultat.
 function search_plugin_recherche(){
-	$requete = 'SELECT id,title,guid,content,description,link,pubdate 
+	$requete = 'SELECT id,title,guid,content,description,link,pubdate,unread, favorite
                 FROM '.MYSQL_PREFIX.'event 
                 WHERE title like \'%'.$_POST['plugin_search'].'%\'';
 	if ($_POST['search_option']=="1"){
@@ -71,7 +71,24 @@ function search_plugin_recherche(){
 			          <a title="'.$data['guid'].'" href="'.$data['link'].'" target="_blank">
 					     '.$data['title'].'
 				      </a>
-				    </div>';
+				      <div class="search_buttonbBar">
+				      	<span ';
+				      	if(!$data['unread']){ 
+				      		echo 'class="pointer right readUnreadButton eventRead"'; 
+				      	} 
+				      	else { 
+				      		echo 'class="pointer right readUnreadButton"'; 
+				      	}
+				      	echo 'onclick="search_readUnread(this,'.$data['id'].');">marquer '.(!$data['unread']?'non lu':'lu').'</span>
+				      	<span ';
+				      	if($data['favorite']){ 
+				      		echo 'class="pointer right readUnreadButton eventFavorite"'; 
+				      	} 
+				      	else { 
+				      		echo 'class="pointer right readUnreadButton"'; 
+				      	}
+				      	echo 'onclick="search_favorize(this,'.$data['id'].');">'.(!$data['favorite']?'Favoriser':'Défavoriser').'</span>';
+			echo '</div></div>';
 			if ($_POST['search_show']=="1"){
 				echo '<div class="search_article_content">
 					     '.$data['content'].'
@@ -82,6 +99,7 @@ function search_plugin_recherche(){
 		echo '</div>';
 	}
 }
+Plugin::addJs("/js/search.js");
 
 // Ajout de la fonction au Hook situé avant l'affichage des évenements
 Plugin::addHook("setting_post_link", "search_plugin_AddLink_and_Search");
