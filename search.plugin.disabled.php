@@ -23,7 +23,8 @@ function search_plugin_AddForm(){
 				<span>(3 car. min.)</span>
 				<fieldset>
 					<legend>Option de recherche</legend>';
-	if(($_POST['search_option'])==0) {
+	if (!isset($_POST['search_option']) ? $search_option=0 : $search_option=$_POST['search_option']);
+	if($search_option==0) {
 		echo '      <input type="radio" checked="checked" value="0" id="search_option_title" name="search_option"><label for="search_option_title">Titre</label>
 					<input type="radio" value="1" id="search_option_content" name="search_option"><label for="search_option_content">+ Contenu</label>';
 	} else {	
@@ -33,7 +34,8 @@ function search_plugin_AddForm(){
 	echo '      </fieldset>
 				<fieldset>
 					<legend>Affichage du résultat</legend>';
-	if(($_POST['search_show'])==0) {
+	if (!isset($_POST['search_show']) ? $search_show=0 : $search_show=$_POST['search_show']);
+	if($search_show==0) {
 		echo '      <input type="radio" checked="checked" value="0" id="search_show_title" name="search_show"><label for="search_show_title">Titre</label>
 					<input type="radio" value="1" id="search_show_content" name="search_show"><label for="search_show_content">+ Contenu</label>';
 	} else {	
@@ -46,7 +48,7 @@ function search_plugin_AddForm(){
     if(isset($_POST['plugin_search'])){
         if(strlen($_POST['plugin_search'])>=3){
 			search_plugin_recherche();
-		}
+		}else{ echo 'Saisir au moins 3 caractères pour lancer la recherche'; }
 	}
 	echo '</section>';
 }
