@@ -19,7 +19,7 @@ function search_plugin_AddForm(){
 	echo '<section id="search" name="search" class="search">
 			<h2>Rechercher des articles</h2>
 			<form action="settings.php#search" method="post">
-				<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.$_POST['plugin_search'].'">
+				<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.(isset($_POST['plugin_search'])?$_POST['plugin_search']:"").'">
 				<span>(3 car. min.)</span>
 				<fieldset>
 					<legend>Option de recherche</legend>';
