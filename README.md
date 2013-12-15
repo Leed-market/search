@@ -14,6 +14,7 @@ Instructions
 Version
 =======
 
+* v2.1.0  -  Ajout de la recherche depuis le menu de Leed
 * v2.0.0  -  Ajout des boutons pour mettre en lu/non lu. et favoris
 * v1.1.0  -  Gestion des css lié à la version Leed
 * v1.0.0  -  Développement Initial

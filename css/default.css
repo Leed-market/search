@@ -15,7 +15,7 @@
 }
 
 .search_article{
-    border-top: 1px solid #cecece;
+	border-top: 1px solid #cecece;
 }
 
 .search_article span{
@@ -28,16 +28,17 @@
 }
 
 .search_article_title{
-    border-bottom: 1px dashed #cecece;
-    font-weight: bold;
-    font-size: 15px;
-    text-decoration: none;
+	border-bottom: 1px dashed #cecece;
+	font-weight: bold;
+	font-size: 15px;
+	text-decoration: none;
 	padding-top: 10px;
 	padding-bottom: 10px;
 	padding-left: 5px;
 	color: #000000;
+	text-align: left;
 }
 
 .search_article_content{
-	
+
 }
