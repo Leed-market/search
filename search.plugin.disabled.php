@@ -4,7 +4,7 @@
 @author Cobalt74 <cobalt74@gmail.com>
 @link http://www.cobestran.com
 @licence CC by nc sa http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
-@version 2.1.0
+@version 2.2.0
 @description Le plugin search permet d'effectuer une recherche sur les articles de Leed. Ne perdez plus aucune information !
 */
 
@@ -17,8 +17,8 @@ function search_plugin_AddLink_and_Search(){
 // affichage d'un formulaire de recherche dans la barre de menu
 function search_plugin_menuForm(){
 	echo '  <aside class="searchMenu">
-			    <form action="settings.php#search" method="post">
-					<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.(isset($_POST['plugin_search'])?$_POST['plugin_search']:"").'">
+			    <form action="settings.php#search" method="get">
+					<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.(isset($_GET['plugin_search'])?$_GET['plugin_search']:"").'">
 					<button type="submit">Rechercher</button>
 				</form>';
 	echo '  </aside>';
@@ -28,12 +28,12 @@ function search_plugin_menuForm(){
 function search_plugin_AddForm(){
 	echo '<section id="search" name="search" class="search">
 			<h2>Rechercher des articles</h2>
-			<form action="settings.php#search" method="post">
-				<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.(isset($_POST['plugin_search'])?$_POST['plugin_search']:"").'">
+			<form action="settings.php#search" method="get">
+				<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.(isset($_GET['plugin_search'])?$_GET['plugin_search']:"").'">
 				<span>(3 car. min.)</span>
 				<fieldset>
 					<legend>Option de recherche</legend>';
-	if (!isset($_POST['search_option']) ? $search_option=0 : $search_option=$_POST['search_option']);
+	if (!isset($_GET['search_option']) ? $search_option=0 : $search_option=$_GET['search_option']);
 	if($search_option==0) {
 		echo '      <input type="radio" checked="checked" value="0" id="search_option_title" name="search_option"><label for="search_option_title">Titre</label>
 					<input type="radio" value="1" id="search_option_content" name="search_option"><label for="search_option_content">+ Contenu</label>';
@@ -44,7 +44,7 @@ function search_plugin_AddForm(){
 	echo '      </fieldset>
 				<fieldset>
 					<legend>Affichage du résultat</legend>';
-	if (!isset($_POST['search_show']) ? $search_show=0 : $search_show=$_POST['search_show']);
+	if (!isset($_GET['search_show']) ? $search_show=0 : $search_show=$_GET['search_show']);
 	if($search_show==0) {
 		echo '      <input type="radio" checked="checked" value="0" id="search_show_title" name="search_show"><label for="search_show_title">Titre</label>
 					<input type="radio" value="1" id="search_show_content" name="search_show"><label for="search_show_content">+ Contenu</label>';
@@ -55,8 +55,8 @@ function search_plugin_AddForm(){
 	echo '			</fieldset>
 				<button type="submit">Rechercher</button>
 			</form>';
-    if(isset($_POST['plugin_search'])){
-        if(strlen($_POST['plugin_search'])>=3){
+    if(isset($_GET['plugin_search'])){
+        if(strlen($_GET['plugin_search'])>=3){
 			search_plugin_recherche();
 		}else{ echo 'Saisir au moins 3 caractères pour lancer la recherche'; }
 	}
@@ -68,9 +68,9 @@ function search_plugin_AddForm(){
 function search_plugin_recherche(){
 	$requete = 'SELECT id,title,guid,content,description,link,pubdate,unread, favorite
                 FROM '.MYSQL_PREFIX.'event 
-                WHERE title like \'%'.$_POST['plugin_search'].'%\'';
-	if (isset($_POST['search_option']) && $_POST['search_option']=="1"){
-		$requete = $requete.' OR content like \'%'.$_POST['plugin_search'].'%\'';
+                WHERE title like \'%'.$_GET['plugin_search'].'%\'';
+	if (isset($_GET['search_option']) && $_GET['search_option']=="1"){
+		$requete = $requete.' OR content like \'%'.$_GET['plugin_search'].'%\'';
 	}
 	$requete = $requete.' ORDER BY pubdate desc';
     $query = mysql_query($requete);
@@ -101,7 +101,7 @@ function search_plugin_recherche(){
 				' - <a title="'.$data['guid'].'" href="'.$data['link'].'" target="_blank">
 					     '.$data['title'].'</a>
 					</div>';
-			if (isset($_POST['search_show']) && $_POST['search_show']=="1"){
+			if (isset($_GET['search_show']) && $_GET['search_show']=="1"){
 				echo '<div class="search_article_content">
 					     '.$data['content'].'
 				     </div>';
