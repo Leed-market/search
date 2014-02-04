@@ -11,7 +11,7 @@
 
 // affichage d'un lien dans le menu "Gestion"
 function search_plugin_AddLink_and_Search(){
-	echo '<li><a class="toggle" href="#search">Rechercher articles</a></li>';
+	echo '<li><a class="toggle" href="#search">'._t('P_SEARCH_TITLE').'</a></li>';
 }
 
 // affichage d'un formulaire de recherche dans la barre de menu
@@ -19,7 +19,7 @@ function search_plugin_menuForm(){
 	echo '  <aside class="searchMenu">
 			    <form action="settings.php#search" method="get">
 					<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.(isset($_GET['plugin_search'])?$_GET['plugin_search']:"").'">
-					<button type="submit">Rechercher</button>
+					<button type="submit">'._t('P_SEARCH_BTN').'</button>
 				</form>';
 	echo '  </aside>';
 }
@@ -27,38 +27,38 @@ function search_plugin_menuForm(){
 // affichage des option de recherche et du formulaire
 function search_plugin_AddForm(){
 	echo '<section id="search" name="search" class="search">
-			<h2>Rechercher des articles</h2>
+			<h2>'._t('P_SEARCH_TITLE_FULL').'</h2>
 			<form action="settings.php#search" method="get">
 				<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.(isset($_GET['plugin_search'])?$_GET['plugin_search']:"").'">
-				<span>(3 car. min.)</span>
+				<span>'._t('P_SEARCH_WARN_CAR').'</span>
 				<fieldset>
-					<legend>Option de recherche</legend>';
+					<legend>'._t('P_SEARCH_OPT_SEARCH').'</legend>';
 	if (!isset($_GET['search_option']) ? $search_option=0 : $search_option=$_GET['search_option']);
 	if($search_option==0) {
-		echo '      <input type="radio" checked="checked" value="0" id="search_option_title" name="search_option"><label for="search_option_title">Titre</label>
-					<input type="radio" value="1" id="search_option_content" name="search_option"><label for="search_option_content">+ Contenu</label>';
-	} else {	
-		echo '		<input type="radio" value="0" id="search_option_title" name="search_option"><label for="search_option_title">Titre</label>
-					<input type="radio" checked="checked" value="1" id="search_option_content" name="search_option"><label for="search_option_content">+ Contenu</label>';
+		echo '      <input type="radio" checked="checked" value="0" id="search_option_title" name="search_option"><label for="search_option_title">'._t('P_SEARCH_OPT_TITLE').'</label>
+					<input type="radio" value="1" id="search_option_content" name="search_option"><label for="search_option_content">'._t('P_SEARCH_OPT_CONTENT').'</label>';
+	} else {
+		echo '		<input type="radio" value="0" id="search_option_title" name="search_option"><label for="search_option_title">'._t('P_SEARCH_OPT_TITLE').'</label>
+					<input type="radio" checked="checked" value="1" id="search_option_content" name="search_option"><label for="search_option_content">'._t('P_SEARCH_OPT_CONTENT').'</label>';
 	}
 	echo '      </fieldset>
 				<fieldset>
-					<legend>Affichage du résultat</legend>';
+					<legend>'._t('P_SEARCH_RES_SEARCH').'</legend>';
 	if (!isset($_GET['search_show']) ? $search_show=0 : $search_show=$_GET['search_show']);
 	if($search_show==0) {
-		echo '      <input type="radio" checked="checked" value="0" id="search_show_title" name="search_show"><label for="search_show_title">Titre</label>
-					<input type="radio" value="1" id="search_show_content" name="search_show"><label for="search_show_content">+ Contenu</label>';
+		echo '      <input type="radio" checked="checked" value="0" id="search_show_title" name="search_show"><label for="search_show_title">'._t('P_SEARCH_OPT_CONTENT').'</label>
+					<input type="radio" value="1" id="search_show_content" name="search_show"><label for="search_show_content">'._t('P_SEARCH_OPT_CONTENT').'</label>';
 	} else {	
-		echo '		<input type="radio" value="0" id="search_show_title" name="search_show"><label for="search_show_title">Titre</label>
-					<input type="radio" checked="checked" value="1" id="search_show_content" name="search_show"><label for="search_show_content">+ Contenu</label>';
+		echo '		<input type="radio" value="0" id="search_show_title" name="search_show"><label for="search_show_title">'._t('P_SEARCH_OPT_CONTENT').'</label>
+					<input type="radio" checked="checked" value="1" id="search_show_content" name="search_show"><label for="search_show_content">'._t('P_SEARCH_OPT_CONTENT').'</label>';
 	}
 	echo '			</fieldset>
-				<button type="submit">Rechercher</button>
+				<button type="submit">'._t('P_SEARCH_BTN').'</button>
 			</form>';
     if(isset($_GET['plugin_search'])){
         if(strlen($_GET['plugin_search'])>=3){
 			search_plugin_recherche();
-		}else{ echo 'Saisir au moins 3 caractères pour lancer la recherche'; }
+		}else{ echo _t('P_SEARCH_WARN_CAR_FULL'); }
 	}
 	echo '</section>';
 }
@@ -87,7 +87,7 @@ function search_plugin_recherche(){
 				      	else {
 				      		echo 'class="pointer right readUnreadButton"';
 				      	}
-				      	echo ' onclick="search_readUnread(this,'.$data['id'].');">marquer '.(!$data['unread']?'non lu':'lu').'</span>
+				      	echo ' onclick="search_readUnread(this,'.$data['id'].');">'.(!$data['unread']?_t('P_SEARCH_BTN_NONLU'):_t('P_SEARCH_BTN_LU')).'</span>
 				      	<span ';
 				      	if($data['favorite']){
 				      		echo 'class="pointer right readUnreadButton eventFavorite"';
@@ -95,7 +95,7 @@ function search_plugin_recherche(){
 				      	else {
 				      		echo 'class="pointer right readUnreadButton"';
 				      	}
-				      	echo ' onclick="search_favorize(this,'.$data['id'].');">'.(!$data['favorite']?'Favoriser':'Défavoriser').'</span>';
+				      	echo ' onclick="search_favorize(this,'.$data['id'].');">'.(!$data['favorite']?_t('P_SEARCH_BTN_FAVORIZE'):_t('P_SEARCH_BTN_UNFAVORIZE')).'</span>';
 			echo '	</div>'.
 				date('d/m/Y à H:i',$data['pubdate']).
 				' - <a title="'.$data['guid'].'" href="'.$data['link'].'" target="_blank">
