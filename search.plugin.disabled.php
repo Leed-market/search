@@ -46,10 +46,10 @@ function search_plugin_AddForm(){
 					<legend>'._t('P_SEARCH_RES_SEARCH').'</legend>';
 	if (!isset($_GET['search_show']) ? $search_show=0 : $search_show=$_GET['search_show']);
 	if($search_show==0) {
-		echo '      <input type="radio" checked="checked" value="0" id="search_show_title" name="search_show"><label for="search_show_title">'._t('P_SEARCH_OPT_CONTENT').'</label>
+		echo '      <input type="radio" checked="checked" value="0" id="search_show_title" name="search_show"><label for="search_show_title">'._t('P_SEARCH_OPT_TITLE').'</label>
 					<input type="radio" value="1" id="search_show_content" name="search_show"><label for="search_show_content">'._t('P_SEARCH_OPT_CONTENT').'</label>';
 	} else {	
-		echo '		<input type="radio" value="0" id="search_show_title" name="search_show"><label for="search_show_title">'._t('P_SEARCH_OPT_CONTENT').'</label>
+		echo '		<input type="radio" value="0" id="search_show_title" name="search_show"><label for="search_show_title">'._t('P_SEARCH_OPT_TITLE').'</label>
 					<input type="radio" checked="checked" value="1" id="search_show_content" name="search_show"><label for="search_show_content">'._t('P_SEARCH_OPT_CONTENT').'</label>';
 	}
 	echo '			</fieldset>
