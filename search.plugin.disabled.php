@@ -4,7 +4,7 @@
 @author Cobalt74 <cobalt74@gmail.com>
 @link http://www.cobestran.com
 @licence CC by nc sa http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
-@version 2.2.0
+@version 2.3.0
 @description Le plugin search permet d'effectuer une recherche sur les articles de Leed. Ne perdez plus aucune information !
 */
 
