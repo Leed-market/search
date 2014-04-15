@@ -67,7 +67,7 @@ function search_plugin_AddForm(){
 // foction de recherche des articles avec affichage du résultat.
 function search_plugin_recherche(){
 	$requete = 'SELECT id,title,guid,content,description,link,pubdate,unread, favorite
-                FROM '.MYSQL_PREFIX.'event 
+                FROM `'.MYSQL_PREFIX.'event`
                 WHERE title like \'%'.$_GET['plugin_search'].'%\'';
 	if (isset($_GET['search_option']) && $_GET['search_option']=="1"){
 		$requete = $requete.' OR content like \'%'.$_GET['plugin_search'].'%\'';
