@@ -4,7 +4,7 @@
 @author Cobalt74 <http://www.cobestran.com>
 @link http://www.cobestran.com
 @licence CC by nc sa http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
-@version 2.3.0
+@version 2.3.1
 @description Le plugin search permet d'effectuer une recherche sur les articles de Leed. Ne perdez plus aucune information !
 */
 
@@ -29,7 +29,7 @@ function search_plugin_AddForm(){
 	echo '<section id="search" name="search" class="search">
 			<h2>'._t('P_SEARCH_TITLE_FULL').'</h2>
 			<form action="settings.php#search" method="get">
-				<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.(isset($_GET['plugin_search'])?$_GET['plugin_search']:"").'">
+				<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.(isset($_GET['plugin_search'])?htmlentities($_GET['plugin_search']):"").'">
 				<span>'._t('P_SEARCH_WARN_CAR').'</span>
 				<fieldset>
 					<legend>'._t('P_SEARCH_OPT_SEARCH').'</legend>';
@@ -68,9 +68,9 @@ function search_plugin_AddForm(){
 function search_plugin_recherche(){
 	$requete = 'SELECT id,title,guid,content,description,link,pubdate,unread, favorite
                 FROM `'.MYSQL_PREFIX.'event`
-                WHERE title like \'%'.$_GET['plugin_search'].'%\'';
+                WHERE title like \'%'.htmlentities($_GET['plugin_search']).'%\'';
 	if (isset($_GET['search_option']) && $_GET['search_option']=="1"){
-		$requete = $requete.' OR content like \'%'.$_GET['plugin_search'].'%\'';
+		$requete = $requete.' OR content like \'%'.htmlentities($_GET['plugin_search']).'%\'';
 	}
 	$requete = $requete.' ORDER BY pubdate desc';
     $query = mysql_query($requete);
