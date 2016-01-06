@@ -66,17 +66,19 @@ function search_plugin_AddForm(){
 
 // foction de recherche des articles avec affichage du résultat.
 function search_plugin_recherche(){
+	$mysqli = new MysqlEntity();
+        $search = $mysqli->escape_string($_GET['plugin_search']);
 	$requete = 'SELECT id,title,guid,content,description,link,pubdate,unread, favorite
                 FROM `'.MYSQL_PREFIX.'event`
-                WHERE title like \'%'.htmlentities($_GET['plugin_search']).'%\'';
+                WHERE title like \'%'.htmlentities($search).'%\'';
 	if (isset($_GET['search_option']) && $_GET['search_option']=="1"){
-		$requete = $requete.' OR content like \'%'.htmlentities($_GET['plugin_search']).'%\'';
+		$requete = $requete.' OR content like \'%'.htmlentities($search).'%\'';
 	}
 	$requete = $requete.' ORDER BY pubdate desc';
-    $query = mysql_query($requete);
-	if($query!=null){
+	$query = $mysqli->customQuery($requete);
+	if($query!=false){
 		echo '<div id="result_search" class="result_search">';
-		while($data = mysql_fetch_array($query)){
+		while($data = $query->fetch_array()){
 			echo '<div class=search_article>
 			        <div class="search_article_title">
 			          <div class="search_buttonbBar">
