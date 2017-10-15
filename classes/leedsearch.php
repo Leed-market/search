@@ -2,7 +2,7 @@
 
 class LeedSearch extends MysqlEntity {
 
-    protected $TABLE_NAME = 'plugin_leedsearch';
+    protected $TABLE_NAME = 'plugin_search';
 
     public function getSearchNames() {
         $results = $this->dbconnector->connection->query('
