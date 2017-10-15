@@ -9,7 +9,7 @@ class LeedSearch extends MysqlEntity {
             SELECT search FROM `' . MYSQL_PREFIX . $this->TABLE_NAME . '`
         ');
 
-        if(!$results) {
+        if($results->num_rows === 0) {
             return array();
         }
         $rows = $results->fetch_all();
