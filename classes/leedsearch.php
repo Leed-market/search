@@ -22,9 +22,6 @@ class LeedSearch extends MysqlEntity {
             return false;
         }
         $search = $this->escape_string($_GET['plugin_search']);
-        if( isset( $_GET['search-save'] ) ) {
-            $this->saveSearch($search);
-        }
         $requete = 'SELECT id,title,guid,content,description,link,pubdate,unread, favorite
             FROM `'.MYSQL_PREFIX.'event`
             WHERE title like \'%'.htmlentities($search).'%\' AND unread=1';
@@ -35,10 +32,28 @@ class LeedSearch extends MysqlEntity {
         return $this->customQuery($requete);
     }
 
+    public function isSearching() {
+        if(!isset($_GET['plugin_search']) || $_GET['plugin_search'] === "") {
+            return false;
+        }
+        if( isset( $_GET['search-save'] ) ) {
+            $this->saveSearch($_GET['plugin_search']);
+        }
+        return true;
+    }
+
+    public function isSearchExists($search) {
+        $query = 'SELECT search
+            FROM `'. MYSQL_PREFIX . $this->TABLE_NAME . '`
+            WHERE search like \'%' . str_replace( '%', ' ' , $search ) . '%\'';
+        $result = $this->customQuery($query);
+        return !!$result->num_rows;
+    }
+
     protected function saveSearch($search) {
         $request = 'INSERT INTO `' . MYSQL_PREFIX . $this->TABLE_NAME . '`
             (search) VALUES ("' . $search . '")';
-        $result = $this->customQuery($requete);
+        $result = $this->customQuery($request);
         // @TODO must return error or already known value message
     }
 
