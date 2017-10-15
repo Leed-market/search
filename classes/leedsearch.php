@@ -58,9 +58,10 @@ class LeedSearch extends MysqlEntity {
     }
 
     protected function getSearchCount($search) {
-        $searchCountQuery .= '( SELECT COUNT(*)
+        $search = '+' . $search;
+        $searchCountQuery = 'SELECT COUNT(*)
                 FROM `'.MYSQL_PREFIX.'event`
-                WHERE title like \'%'.htmlentities($search).'%\' AND unread=1)';
+                WHERE MATCH(title) AGAINST("'.str_replace("%", " +", $search).'" IN BOOLEAN MODE) AND unread=1';
 	$query = $this->customQuery($searchCountQuery);
         $row = $query->fetch_row();
         return $row[0];
@@ -85,10 +86,14 @@ class LeedSearch extends MysqlEntity {
             ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
         ';
         $this->dbconnector->connection->query($query);
+        $query = 'ALTER TABLE `' . MYSQL_PREFIX . 'event` ADD FULLTEXT(title)';
+        $this->dbconnector->connection->query($query);
     }
 
     public function uninstall() {
         $this->destroy();
+        $query = 'DROP INDEX title ON `' . MYSQL_PREFIX . 'event`;';
+        $this->dbconnector->connection->query($query);
     }
 
 }
