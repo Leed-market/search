@@ -18,7 +18,7 @@ function search_plugin_AddLink_and_Search(){
 // affichage d'un formulaire de recherche dans la barre de menu
 function search_plugin_menuForm(){
         $leedSearch = new LeedSearch();
-        $leedSearch->saveSearch();
+        $leedSearch->action();
 	echo '<section class="searchMenu">
 			    <form action="settings.php#search" method="get">
 					<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'. $leedSearch->current .'">
@@ -47,8 +47,9 @@ function search_plugin_AddForm(){
 			<form action="settings.php#search" method="get">
 				<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.$leedSearch->current.'">
 				<span>'._t('P_SEARCH_WARN_CAR').'</span>';
-        if($leedSearch->isSearching && !$leedSearch->isSearchExists(htmlentities($_GET['plugin_search']))) {
-            echo '<button type="submit" name="search-save">' . _t('P_SEARCH_SAVE') . '</button>';
+        if($leedSearch->isSearching) {
+            $saveSearchButtonInfos = $leedSearch->getSaveToggleButtonInfos();
+            echo '<button type="submit" name="' . $saveSearchButtonInfos['name'] . '">' . $saveSearchButtonInfos['text'] . '</button>';
         }
         echo '<fieldset>
                 <legend>'._t('P_SEARCH_OPT_SEARCH').'</legend>';

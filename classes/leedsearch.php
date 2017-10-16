@@ -7,6 +7,11 @@ class LeedSearch extends MysqlEntity {
     public $isSearching = false;
     public $current = "";
 
+    const ACTION_NAMES = array(
+        'add' => 'search-add',
+        'remove' => 'search-remove'
+    );
+
     public function __construct() {
         parent::__construct();
         $this->setIsSearching();
@@ -57,14 +62,42 @@ class LeedSearch extends MysqlEntity {
         return !!$result->num_rows;
     }
 
-    public function saveSearch() {
-        if($this->current === "" || !isset($_GET['search-add'])) {
+    public function action() {
+        if($this->current === "") {
             return false;
         }
+        if(isset($_GET[self::ACTION_NAMES['add']])) {
+            $this->saveSearch();
+        } elseif(isset($_GET[self::ACTION_NAMES['remove']])) {
+            $this->removeSearch();
+        }
+    }
+
+    protected function saveSearch() {
         $request = 'INSERT INTO `' . MYSQL_PREFIX . $this->TABLE_NAME . '`
             (search) VALUES ("' . $this->current . '")';
         $result = $this->customQuery($request);
         // @TODO must return error or already known value message
+    }
+
+    protected function removeSearch() {
+        $request = 'DELETE FROM `' . MYSQL_PREFIX . $this->TABLE_NAME . '`
+            WHERE search="' . $this->current . '"';
+        $result = $this->customQuery($request);
+        // @TODO must return error or already known value message
+    }
+
+    public function getSaveToggleButtonInfos() {
+        if($this->isSearchExists($this->current)) {
+            return array(
+                'name' => self::ACTION_NAMES['remove'],
+                'text' => _t('P_SEARCH_REMOVE')
+            );
+        }
+        return array(
+            'name' => self::ACTION_NAMES['add'],
+            'text' => _t('P_SEARCH_SAVE')
+        );
     }
 
     protected function getSearchCount($search) {
