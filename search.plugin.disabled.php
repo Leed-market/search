@@ -48,7 +48,7 @@ function search_plugin_AddForm(){
 				<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.($isSearching ? htmlentities($_GET['plugin_search']):"").'">
 				<span>'._t('P_SEARCH_WARN_CAR').'</span>';
         if($isSearching && !$leedSearch->isSearchExists(htmlentities($_GET['plugin_search']))) {
-            echo '<button type="submit" name="search-save">SAVETOTRANSLATE</button>';
+            echo '<button type="submit" name="search-save">' . _t('P_SEARCH_SAVE') . '</button>';
         }
         echo '<fieldset>
                 <legend>'._t('P_SEARCH_OPT_SEARCH').'</legend>';
