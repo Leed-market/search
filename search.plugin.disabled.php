@@ -5,7 +5,7 @@
 @link http://www.cobestran.com
 @licence CC by nc sa http://creativecommons.org/licenses/by-nc-sa/2.0/fr/
 @version 2.3.1
-@description Le plugin search permet d'effectuer une recherche sur les articles de Leed. Ne perdez plus aucune information !
+@description Le plugin search permet d'effectuer et de sauvegarder une recherche sur les articles de Leed. Ne perdez plus aucune information et sauvegardez vos recherches fréquentes !
 */
 
 
