@@ -50,7 +50,11 @@ class LeedSearch extends MysqlEntity {
         return !!$result->num_rows;
     }
 
-    protected function saveSearch($search) {
+    protected function saveSearch($dirtySearch) {
+        $search = trim($dirtySearch);
+        if($search === "") {
+            return false;
+        }
         $request = 'INSERT INTO `' . MYSQL_PREFIX . $this->TABLE_NAME . '`
             (search) VALUES ("' . $search . '")';
         $result = $this->customQuery($request);
