@@ -17,9 +17,11 @@ function search_plugin_AddLink_and_Search(){
 
 // affichage d'un formulaire de recherche dans la barre de menu
 function search_plugin_menuForm(){
+        global $theme;
+        $tag = $theme === 'marigolds' ? 'aside' : 'section';
         $leedSearch = new LeedSearch();
         $leedSearch->action();
-	echo '<section class="searchMenu">
+	echo '<' . $tag . ' class="searchMenu">
 			    <form action="settings.php#search" method="get">
 					<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'. $leedSearch->current .'">
 					<button type="submit">'._t('P_SEARCH_BTN').'</button>
@@ -36,7 +38,7 @@ function search_plugin_menuForm(){
             }
             echo '</ul>';
         }
-	echo '</section>';
+	echo '</' . $tag . '>';
 }
 
 // affichage des option de recherche et du formulaire
