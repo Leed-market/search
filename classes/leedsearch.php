@@ -112,7 +112,7 @@ class LeedSearch extends MysqlEntity {
 
     protected function formatSearch($searchRow) {
         $search = $searchRow[0];
-        $formatted = str_replace(' ', '%25', $this->escape_string($search));
+        $formatted = $this->escape_string($search);
         $count = $this->getSearchCount($this->escape_string(str_replace(' ', '%', $search)));
         return array(
             'name' => $search,
