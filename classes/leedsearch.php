@@ -24,7 +24,7 @@ class LeedSearch extends MysqlEntity {
         $search = $this->escape_string($_GET['plugin_search']);
         $requete = 'SELECT id,title,guid,content,description,link,pubdate,unread, favorite
             FROM `'.MYSQL_PREFIX.'event`
-            WHERE title like \'%'.htmlentities($search).'%\' AND unread=1';
+            WHERE title like \'%'.htmlentities($search).'%\'';
         if (isset($_GET['search_option']) && $_GET['search_option']=="1"){
             $requete = $requete.' OR content like \'%'.htmlentities($search).'%\'';
         }
