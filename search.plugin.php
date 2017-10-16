@@ -123,6 +123,7 @@ Plugin::addJs("/js/search.js");
 
 // Ajout de la fonction au Hook situé avant l'affichage des évenements
 Plugin::addHook("setting_post_link", "search_plugin_AddLink_and_Search");
+Plugin::addHook("setting_post_link", "search_plugin_menuForm");
 Plugin::addHook("setting_post_section", "search_plugin_AddForm");
 //Ajout de la fonction au Hook situé après le menu des fluxs
 Plugin::addHook("menu_pre_folder_menu", "search_plugin_menuForm");

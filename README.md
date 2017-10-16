@@ -16,7 +16,6 @@ Instructions
 Idées
 =====
 
-* Affichage des recherches sauvegardées dans les settings
 * Suppression des recherches sauvegardées
 * Filtrer la recherche sur les contenus déjà lus / non lus
 * Paramétrer si les informations de recherche sont placées en haut ou en bas de la colonne des flux
