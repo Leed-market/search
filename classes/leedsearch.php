@@ -4,6 +4,14 @@ class LeedSearch extends MysqlEntity {
 
     protected $TABLE_NAME = 'plugin_search';
 
+    public $isSearching = false;
+    public $current = "";
+
+    public function __construct() {
+        parent::__construct();
+        $this->setIsSearching();
+    }
+
     public function getSearchNames() {
         $results = $this->dbconnector->connection->query('
             SELECT search FROM `' . MYSQL_PREFIX . $this->TABLE_NAME . '`
@@ -32,14 +40,13 @@ class LeedSearch extends MysqlEntity {
         return $this->customQuery($requete);
     }
 
-    public function isSearching() {
+    public function setIsSearching() {
         if(!isset($_GET['plugin_search']) || $_GET['plugin_search'] === "") {
             return false;
         }
-        if( isset( $_GET['search-save'] ) ) {
-            $this->saveSearch($_GET['plugin_search']);
-        }
-        return true;
+        $search = trim(htmlentities($_GET['plugin_search']));
+        $this->isSearching = true;
+        $this->current = $search;
     }
 
     public function isSearchExists($search) {
@@ -50,13 +57,12 @@ class LeedSearch extends MysqlEntity {
         return !!$result->num_rows;
     }
 
-    protected function saveSearch($dirtySearch) {
-        $search = trim($dirtySearch);
-        if($search === "") {
+    public function saveSearch() {
+        if($this->current === "" || !isset($_GET['search-add'])) {
             return false;
         }
         $request = 'INSERT INTO `' . MYSQL_PREFIX . $this->TABLE_NAME . '`
-            (search) VALUES ("' . $search . '")';
+            (search) VALUES ("' . $this->current . '")';
         $result = $this->customQuery($request);
         // @TODO must return error or already known value message
     }

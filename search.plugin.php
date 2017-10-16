@@ -17,12 +17,13 @@ function search_plugin_AddLink_and_Search(){
 
 // affichage d'un formulaire de recherche dans la barre de menu
 function search_plugin_menuForm(){
+        $leedSearch = new LeedSearch();
+        $leedSearch->saveSearch();
 	echo '<section class="searchMenu">
 			    <form action="settings.php#search" method="get">
-					<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.(isset($_GET['plugin_search'])?$_GET['plugin_search']:"").'">
+					<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'. $leedSearch->current .'">
 					<button type="submit">'._t('P_SEARCH_BTN').'</button>
 				</form>';
-        $leedSearch = new LeedSearch();
         $searches = $leedSearch->getSearchNames();
         if(!empty($searches)) {
             echo '<ul>';
@@ -41,13 +42,12 @@ function search_plugin_menuForm(){
 // affichage des option de recherche et du formulaire
 function search_plugin_AddForm(){
         $leedSearch = new LeedSearch();
-        $isSearching = $leedSearch->isSearching();
 	echo '<section id="search" name="search" class="search">
 			<h2>'._t('P_SEARCH_TITLE_FULL').'</h2>
 			<form action="settings.php#search" method="get">
-				<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.($isSearching ? htmlentities($_GET['plugin_search']):"").'">
+				<input type="text" name="plugin_search" id="plugin_search" placeholder="..." value="'.$leedSearch->current.'">
 				<span>'._t('P_SEARCH_WARN_CAR').'</span>';
-        if($isSearching && !$leedSearch->isSearchExists(htmlentities($_GET['plugin_search']))) {
+        if($leedSearch->isSearching && !$leedSearch->isSearchExists(htmlentities($_GET['plugin_search']))) {
             echo '<button type="submit" name="search-save">' . _t('P_SEARCH_SAVE') . '</button>';
         }
         echo '<fieldset>
@@ -74,8 +74,8 @@ function search_plugin_AddForm(){
 	echo '			</fieldset>
 				<button type="submit" name="search-launch">'._t('P_SEARCH_BTN').'</button>
 			</form>';
-    if($isSearching){
-        if(strlen($_GET['plugin_search'])>=3){
+    if($leedSearch->isSearching){
+        if(strlen($leedSearch->current)>=3){
                     $datas = $leedSearch->search();
                     if($datas !== false) {
                         echo '<div id="result_search" class="result_search">';
