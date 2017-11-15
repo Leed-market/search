@@ -16,10 +16,11 @@ function search_plugin_AddLink_and_Search(){
 }
 
 // affichage d'un formulaire de recherche dans la barre de menu
-function search_plugin_menuForm(){
+function search_plugin_menuForm($user){
         global $theme;
         $tag = $theme === 'marigolds' ? 'aside' : 'section';
         $leedSearch = new LeedSearch();
+        $leedSearch->setUserId($user->getId());
         $leedSearch->action();
 	echo '<' . $tag . ' class="searchMenu">
 			    <form action="settings.php#search" method="get">

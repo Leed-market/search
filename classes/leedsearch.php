@@ -6,6 +6,7 @@ class LeedSearch extends MysqlEntity {
 
     public $isSearching = false;
     public $current = "";
+    protected $userId = false;
 
     const ACTION_NAMES = array(
         'add' => 'search-add',
@@ -102,9 +103,11 @@ class LeedSearch extends MysqlEntity {
 
     protected function getSearchCount($search) {
         $search = '+' . $search;
-        $searchCountQuery = 'SELECT COUNT(*)
-                FROM `'.MYSQL_PREFIX.'event`
-                WHERE MATCH(title) AGAINST("'.str_replace("%", " +", $search).'" IN BOOLEAN MODE) AND unread=1';
+        $searchCountQuery = 'SELECT COUNT(*) ' .
+                'FROM `'.MYSQL_PREFIX.'event` AS ev ' .
+                'LEFT JOIN `'.MYSQL_PREFIX.'event_sub` AS sub ' .
+                'ON ev.id = sub.eventid ' .
+                'WHERE MATCH(title) AGAINST("'.str_replace("%", " +", $search).'" IN BOOLEAN MODE) AND sub.unread=1';
 	$query = $this->customQuery($searchCountQuery);
         $row = $query->fetch_row();
         return $row[0];
@@ -139,4 +142,13 @@ class LeedSearch extends MysqlEntity {
         $this->dbconnector->connection->query($query);
     }
 
+    public function setUserId($userId)
+    {
+        $this->userId = $userId;
+    }
+
+    public function getUserId()
+    {
+        return $this->userId;
+    }
 }
